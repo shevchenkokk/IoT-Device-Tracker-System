@@ -1,0 +1,33 @@
+{% extends 'InfoSystem/base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+    <div class="d-flex align-items-center justify-content-center">
+        <h2> Авторизация </h2>
+    </div><br>
+
+    {% if is_auth_wrong %}
+        <div class="text-danger font-weight-bold">
+            Неправильное имя пользователя или пароль
+        </div><br>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                {% if field.errors %}
+                    <div class="text-danger font-weight-bold">
+                        {{ field.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        {{ form.username }}<br>
+        {{ form.password }}<br>
+        <button type="submit" class="btn btn-warning" style="display: inline;"> Войти </button>
+        <a class="btn btn-outline-dark" style="text-decoration: none;" href="{% url 'password_reset' %}"> Забыли пароль? </a>
+    </form>
+
+{% endblock %}

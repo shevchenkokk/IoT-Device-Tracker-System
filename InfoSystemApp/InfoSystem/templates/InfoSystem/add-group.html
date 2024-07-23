@@ -1,0 +1,26 @@
+{% extends 'InfoSystem/base.html' %}
+
+{% block title %} Новая группа устройств {% endblock %}
+
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center">
+    <h2> Новая группа устройств </h2>
+</div><br>
+
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+        <div>
+            {% if field.errors %}
+                <div class="text-danger font-weight-bold">
+                    {{ field.errors|join:", " }}
+                </div>
+            {% endif %}
+            {{ field }} <br>
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-warning"> Создать </button>
+</form>
+
+{% endblock %}

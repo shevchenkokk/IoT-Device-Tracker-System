@@ -1,0 +1,4 @@
+Django==4.2.1
+django_phonenumber_field==7.1.0
+paho_mqtt==1.6.1
+PyMySQL==1.0.3

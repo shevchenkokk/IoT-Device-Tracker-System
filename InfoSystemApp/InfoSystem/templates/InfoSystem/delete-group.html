@@ -1,0 +1,17 @@
+{% extends 'InfoSystem/base.html' %}
+
+{% block title %} Удаление группы устройств "{{group.device_group_name}}" {% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center">
+    <h2> Удаление группы устройств "{{group.device_group_name}}" </h2>
+</div><br>
+
+<form method="POST">
+    {% csrf_token %}
+    <p> Вы уверены, что хотите удалить группу устройств "{{ group.device_group_name }}"? </p>
+    <button type="submit" class="btn btn-warning" style="display: inline;"> Удалить </button>
+    <a class="btn btn-outline-dark" href="{% url 'groups' %}"> Назад </a>
+</form>
+
+{% endblock %}

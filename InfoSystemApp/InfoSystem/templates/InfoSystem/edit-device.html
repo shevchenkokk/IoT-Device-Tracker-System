@@ -1,0 +1,25 @@
+{% extends 'InfoSystem/base.html' %}
+
+{% block title %} Редактирование устройства "{{ device.device_name }}" в группе "{{ group.device_group_name }}"  {% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center">
+    <h2> Редактирование устройства "{{ device.device_name }}" в группе "{{ group.device_group_name }}"</h2>
+</div><br>
+
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+        <div>
+            {% if field.errors %}
+                <div class="text-danger font-weight-bold">
+                    {{ field.errors|join:", " }}
+                </div>
+            {% endif %}
+            {{ field }} <br>
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-warning"> Применить </button>
+</form>
+
+{% endblock %}

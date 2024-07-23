@@ -1,0 +1,18 @@
+{% extends 'InfoSystem/base.html' %}
+
+{% block title %} Токен для подключения к устройству "{{ device.device_name }}" {% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center">
+    <h2> Токен для подключения к устройству "{{ device.device_name }}" </h2>
+</div><br>
+
+<p>  <b> Сохраните</b>, пожалуйста, токен для подключения к устройству "{{ device.device_name}}". </p>
+
+<p> <b> Внимание!</b> Токен доступен для копирования лишь один раз. </p>
+
+<p> {{ auth_token }}</p>
+
+<a class="btn btn-outline-dark" href="{% url 'show-group' group.device_group_id %}"> К устройствам </a>
+
+{% endblock %}

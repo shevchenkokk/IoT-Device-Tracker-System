@@ -1,0 +1,54 @@
+{% extends 'InfoSystem/base.html' %}
+
+{% block title %} Управление устройством "{{ device.device_name }}" {% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center">
+    <h2> Управление устройством "{{ device.device_name }}" </h2>
+</div><br>
+
+<p>
+<a class="btn btn-outline-dark" href="{% url 'delete-device' group.device_group_id device.device_id %}"> Удалить устройство </a>
+</p>
+
+<p> Для подключения устройства установите брокер сообщений <b> Mosquitto</b>. </p>
+
+<p> Для тестирования в терминале введите команду </p>
+
+<p>
+<code class="text-danger"> mosquitto_pub -h "localhost" -p "1883" -t 
+    "{{ group.device_group_name }}/devices/{{ device.device_id }}/telemetry" -u "$AUTH_TOKEN" -m "$MESSAGE"</code>
+</p>
+
+<p> Здесь <b>$AUTH_TOKEN</b> – токен аутентификации устройства, генерируемый при его создании, 
+<br>    
+<b> $MESSAGE </b> – сообщение, формат которого установлен сервисом. </p>
+
+<p> Для подключения физических устройств используйте указанные выше параметры. </p>
+
+<div class="d-flex align-items-center justify-content-center">
+    <h2> Телеметрия </h2>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <div id="dates">
+        <h4> Дата </h4>
+        {% for data_frame in data_frames %}
+            <p> {{ data_frame.timestamp }} </p>
+        {% endfor %}
+    </div>
+    <div>
+        <h4> Параметр </h4>
+        {% for data_frame in data_frames %}
+            <p> {{ data_frame.parameter.parameter_name }} </p>
+        {% endfor %}
+    </div>
+    <div>
+        <h4> Значение </h4>
+        {% for data_frame in data_frames %}
+            <p> {{ data_frame.result }} </p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

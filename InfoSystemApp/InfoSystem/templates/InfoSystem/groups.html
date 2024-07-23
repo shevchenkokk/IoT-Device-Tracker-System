@@ -1,0 +1,43 @@
+{% extends 'InfoSystem/base.html' %}
+
+{% block title %} Группы устройств {% endblock %}
+
+
+{% block content %}
+    <div class="d-flex align-items-center justify-content-center">
+        <h2> Управление группами устройств </h2>
+    </div><br>
+
+    {% if groups %}
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <form method="GET" style="display: flex;">
+                <input type="text" class="form-control w-75" name="search" placeholder="Поиск"
+                value="{{ search_input }}" style="display: inline;">
+                <input type="submit" class="btn btn-outline-dark p-2" value="Найти">
+            </form>
+            <a href="{% url 'add-group' %}" style="text-decoration: none; font-size: 40px; color: rgba(76, 40, 154, 0.978); margin-right: 5px;"> &#43; </a>
+        </div>
+        {% for group in groups %}
+                <div style="position: relative;">
+                    <a href="{% url 'show-group' group.device_group_id %}" style="text-decoration: none;">
+                        <div class="alert alert-warning border border-2 rounded rounded-3 mt-2;" style="background: rgb(131,58,180);
+                        background: linear-gradient(90deg, rgb(142, 40, 210, 0.4) 0%, rgba(243, 3, 35, 0.933) 69%, rgba(252,176,69,1) 100%);
+                        color: rgb(10, 10, 10); text-shadow: 1px black"> 
+                            <h4 style="display: inline;"> {{ group.device_group_name }} </h4>
+                            <p class="mb-0" style="font-size: 15px;"> Дата создания: {{ group.creation_date }} </p>
+                            <p class="mb-0" style="font-size: 15px;"> Статус: {{ group.status }}</p>
+                            <p class="mb-0" style="font-size: 15px;"> Описание: {{ group.description }} </p>
+                        </div>
+                    </a>
+                    <a href="{% url 'edit-group' group.device_group_id %}" style="text-decoration: none; font-size: 30px; color: rgba(76, 40, 154, 0.978);
+                    display: inline-block; position: absolute; top: 0; right: 0; margin-top: 45px; margin-right: 40px;"> &#9998; </a>
+                    <a href="{% url 'delete-group' group.device_group_id %}" style="text-decoration: none; font-size: 40px; color: rgba(76, 40, 154, 0.978);
+                    display: inline-block; position: absolute; top: 0; right: 0; margin-top: 35px; margin-right: 5px;"> &#215; </a>
+                </div>
+        {% endfor %}
+    {% else %}
+        <p> У вас пока нет добавленных групп устройств. </p>
+        <a class="btn btn-outline-dark" href="{% url 'add-group' %}" style="text-decoration: none; margin-right: 5px;"> Добавить </a>
+    {% endif %}
+
+{% endblock %}

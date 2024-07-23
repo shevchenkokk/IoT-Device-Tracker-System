@@ -1,0 +1,43 @@
+{% extends 'InfoSystem/base.html' %}
+
+{% block title %} Управление группой устройств "{{ group.device_group_name }}" {% endblock %}
+
+{% block content %}
+    <div class="d-flex align-items-center justify-content-center">
+        <h2> Управление группой устройств "{{ group.device_group_name }}" </h2>
+    </div><br>
+
+    {% if devices %}
+        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+            <form method="GET" style="display: flex;">
+                <input type="text" class="form-control w-75" name="search" placeholder="Поиск"
+                value="{{ search_input }}" style="display: inline;">
+                <input type="submit" class="btn btn-outline-dark p-2" value="Найти">
+            </form>
+            <a class="btn btn-outline-dark" href="{% url 'add-device' group.device_group_id%}"> Добавить устройство </a> <br>
+        </div>
+        {% for device in devices %}
+                <div style="position: relative;">
+                    <a href="{% url 'show-device' group.device_group_id device.device_id %}" style="text-decoration: none;">
+                        <div class="alert alert-warning border border-2 rounded rounded-3 mt-2;" style="background: rgb(2,0,36);
+                        background: linear-gradient(255deg, rgba(2,0,36,0.78) 0%, rgba(64,44,187,0.7749474789915967) 49%, rgba(0,212,255,0.7) 100%);
+                        color: rgb(2,0,36); text-shadow: 1px black"> 
+                            <h4> {{ device.device_name }} </h4>
+                            <p class="mb-0" style="font-size: 15px;"> Дата создания: {{ device.creation_date }} </p>
+                            <p class="mb-0" style="font-size: 15px;"> Статус: {{ device.status }}</p>
+                            <p class="mb-0" style="font-size: 15px;"> Местоположение: {{ device.location_name }} </p>
+                            <p class="mb-0" style="font-size: 15px;"> Описание: {{ device.description }} </p>
+                        </div>
+                    </a>
+                    <a href="{% url 'edit-device' group.device_group_id device.device_id %}" style="text-decoration: none; font-size: 30px; color: rgba(255, 0, 68, 0.978);
+                    display: inline-block; position: absolute; top: 0; right: 0; margin-top: 45px; margin-right: 40px;"> &#9998; </a>
+                    <a href="{% url 'delete-device' group.device_group_id device.device_id %}" style="text-decoration: none; font-size: 40px; color: rgba(255, 0, 68, 0.978);
+                    display: inline-block; position: absolute; top: 0; right: 0; margin-top: 35px; margin-right: 5px;"> &#215; </a>
+                </div>
+        {% endfor %}
+    {% else %}
+        <p> У вас пока нет добавленных устройств. </p>
+        <a class="btn btn-outline-dark" href="{% url 'add-device' group.device_group_id%}"> Добавить устройство </a>
+    {% endif %}
+
+{% endblock %}
